@@ -47,9 +47,9 @@ router.get("/:id/comments", (req, res) => {
     });
 });
 
-router.get("/:id/:postId", (req, res) => {
+router.get("/comments", (req, res) => {
   users
-    .findPostComments(req.params.id, req.params.postId)
+    .findPostComments(req.params.postId)
     .then((comment) => {
       res.status(200).json(comment);
     })
@@ -89,6 +89,18 @@ router.post("/:id/comments", (req, res) => {
     });
 });
 
-router.delete();
+router.delete("/:id", (req, res) => {
+  users
+    .remove(req.params.id)
+    .then(() => {
+      res.json();
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        message: "No such post exists",
+      });
+    });
+});
 
 module.exports = router;
