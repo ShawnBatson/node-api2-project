@@ -47,6 +47,20 @@ router.get("/:id/comments", (req, res) => {
     });
 });
 
+router.get("/:id/:postId", (req, res) => {
+  users
+    .findPostComments(req.params.id, req.params.postId)
+    .then((comment) => {
+      res.status(200).json(comment);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        message: "could not find Comments",
+      });
+    });
+});
+
 router.post("/", (req, res) => {
   users
     .insert(req.body)
@@ -60,5 +74,21 @@ router.post("/", (req, res) => {
       });
     });
 });
+
+router.post("/:id/comments", (req, res) => {
+  users
+    .insertComment(req.body)
+    .then((comments) => {
+      res.status(201).json(comments);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        message: "Could not Add the Comment",
+      });
+    });
+});
+
+router.delete();
 
 module.exports = router;
