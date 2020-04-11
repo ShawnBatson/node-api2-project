@@ -103,4 +103,18 @@ router.delete("/:id", (req, res) => {
     });
 });
 
+router.put("/:id", (req, res) => {
+  users
+    .update(req.params.id, req.body)
+    .then((updatePost) => {
+      res.status(201).json(updatePost);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        message: "cannot Update",
+      });
+    });
+});
+
 module.exports = router;
