@@ -33,4 +33,32 @@ router.get("/:id", (req, res) => {
     });
 });
 
+router.get("/:id/comments", (req, res) => {
+  users
+    .findCommentById(req.params.id)
+    .then((comment) => {
+      res.status(200).json(comment);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        message: "Error connecting to server",
+      });
+    });
+});
+
+router.post("/", (req, res) => {
+  users
+    .insert(req.body)
+    .then((user) => {
+      res.status(201).json(user);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        message: "Error adding user",
+      });
+    });
+});
+
 module.exports = router;
